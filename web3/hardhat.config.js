@@ -6,7 +6,7 @@ module.exports = {
     networks: {
       hardat: {},
       sepolia: {
-        url: "https://rpc.sepolia.dev",
+        url: "https://sepolia.rpc.thirdweb.com",
         accounts: [`0x${process.env.PRIVATE_KEY}`],
       },
     },

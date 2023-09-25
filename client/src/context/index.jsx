@@ -6,12 +6,14 @@ import {
   useMetamask,
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
+import { contractAbi } from "../constants";
 
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
   const { contract } = useContract(
-    "0x8B2080e5d95D01129D45EDf67A2421C8710fA93F"
+    "0x6B097dEe493360EFF00c2467Ceac7a76c9ae84cF",
+    contractAbi
   );
   const { mutateAsync: createCampaign } = useContractWrite(
     contract,
@@ -22,14 +24,16 @@ export const StateContextProvider = ({ children }) => {
 
   const publishCampaign = async (form) => {
     try {
-      const data = await createCampaign([
-        address,
-        form.title,
-        form.description,
-        form.target,
-        new Date(form.deadline).getTime(),
-        form.image,
-      ]);
+      const data = await createCampaign({
+        args: [
+          address,
+          form.title,
+          form.description,
+          form.target,
+          new Date(form.deadline).getTime(),
+          form.image,
+        ],
+      });
 
       console.log("contract call success", data);
     } catch (e) {
@@ -38,7 +42,7 @@ export const StateContextProvider = ({ children }) => {
   };
   return (
     <StateContext.Provider
-      value={{ address, contract, createCampaign: publishCampaign }}
+      value={{ address, contract, connect, createCampaign: publishCampaign }}
     >
       {children}
     </StateContext.Provider>

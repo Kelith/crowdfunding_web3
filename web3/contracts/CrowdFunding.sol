@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
-contract CrowdFunding {
+import "@thirdweb-dev/contracts/extension/ContractMetadata.sol";
+
+
+contract CrowdFunding is ContractMetadata {
+
+    address public deployer;
+
     struct Campaign {
         address owner;
         string title;
@@ -17,6 +23,14 @@ contract CrowdFunding {
     mapping(uint => Campaign) public campaigns;
 
     uint public campaignCount = 0;
+
+    constructor() {
+        deployer = msg.sender;
+    }
+
+    function _canSetContractURI() internal view virtual override returns (bool){
+        return msg.sender == deployer;
+    }
 
     function createCampaign(address _owner, 
         string memory _title, 
