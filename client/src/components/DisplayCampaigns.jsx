@@ -1,9 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { loader } from "../assets";
+import { FundCard } from ".";
 
 const DisplayCampaigns = ({ title, isLoading, campaigns }) => {
   const navigate = useNavigate();
+
+  const handleNavigate = (campaign) =>
+    navigate(`/campaign-details/${campaign.title}`, { state: campaign });
 
   return (
     <div>
@@ -25,6 +29,16 @@ const DisplayCampaigns = ({ title, isLoading, campaigns }) => {
             You have not created any campigns yet
           </p>
         )}
+
+        {!isLoading &&
+          campaigns.length > 0 &&
+          campaigns.map((campaign) => (
+            <FundCard
+              key={campaign.id}
+              {...campaign}
+              handleClick={() => handleNavigate(campaign)}
+            />
+          ))}
       </div>
     </div>
   );
