@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
 
 import { useStateContext } from "../context";
-import { CountBox, CustomButton } from "../components";
+import { CountBox, CustomButton, Loader } from "../components";
 import { calculateBarPercentage, daysLeft } from "../utils";
 import { thirdweb } from "../assets";
 
@@ -39,7 +39,7 @@ const CampaignDetails = () => {
 
   return (
     <div>
-      {isLoading && "Loading..."}
+      {isLoading && <Loader />}
       <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
         <div className="flex-1 flex-col">
           <img
@@ -144,7 +144,7 @@ const CampaignDetails = () => {
           </h4>
 
           <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
-            <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
+            <p className="font-epilogue font-medium text-[20px] leading-[30px] text-center text-[#808191]">
               Fund the campaign
             </p>
             <div className="mt-[30px]">
